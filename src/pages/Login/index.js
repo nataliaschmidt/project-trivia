@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
+import { fetchToken } from '../../services';
 
 class Login extends Component {
   state = {
@@ -26,6 +27,13 @@ class Login extends Component {
         isDisabled: true,
       });
     }
+  };
+
+  handleClick = async () => {
+    const data = await fetchToken();
+    localStorage.setItem('token', data.token);
+    const { history } = this.props;
+    history.push('/trivia');
   };
 
   render() {
@@ -57,6 +65,7 @@ class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ isDisabled }
+            onClick={ this.handleClick }
           >
             Play
 
@@ -67,8 +76,10 @@ class Login extends Component {
   }
 }
 
-// Login.propTypes = {
-
-// };
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
 
 export default Login;
