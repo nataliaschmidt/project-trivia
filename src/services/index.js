@@ -13,3 +13,9 @@ export const fetchImage = (email) => {
   const emailUrl = `https://www.gravatar.com/avatar/${emailHash}`;
   return emailUrl;
 };
+
+export const fetchQuestions = async (number, token) => {
+  const response = await fetch(`https://opentdb.com/api.php?amount=${number}&token=${token}`);
+  const data = await response.json();
+  return data;
+};
