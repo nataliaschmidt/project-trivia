@@ -7,6 +7,7 @@ class Login extends Component {
     loginName: '',
     loginEmail: '',
     isDisabled: true,
+    displaySettings: false,
   };
 
   handleChange = ({ target }) => {
@@ -29,15 +30,28 @@ class Login extends Component {
     }
   };
 
-  handleClick = async () => {
+  handlePlay = async () => {
     const data = await fetchToken();
     localStorage.setItem('token', data.token);
     const { history } = this.props;
-    history.push('/trivia');
+    history.push('/game');
+  };
+
+  handleSettings = () => {
+    const { displaySettings } = this.state;
+    if (!displaySettings) {
+      this.setState({
+        displaySettings: true,
+      });
+    } else {
+      this.setState({
+        displaySettings: false,
+      });
+    }
   };
 
   render() {
-    const { loginName, loginEmail, isDisabled } = this.state;
+    const { loginName, loginEmail, isDisabled, displaySettings } = this.state;
     return (
       <div>
         <form>
@@ -65,11 +79,24 @@ class Login extends Component {
             type="button"
             data-testid="btn-play"
             disabled={ isDisabled }
-            onClick={ this.handleClick }
+            onClick={ this.handlePlay }
           >
             Play
 
           </button>
+          <button
+            type="button"
+            onClick={ this.handleSettings }
+            data-testid="btn-settings"
+          >
+            Configurações
+
+          </button>
+          {displaySettings && (
+            <section>
+              <h3 data-testid="settings-title">Configurações</h3>
+            </section>
+          )}
         </form>
       </div>
     );
