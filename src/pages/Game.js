@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { fetchQuestions } from '../services';
-// import PropTypes from 'prop-types';
 
 const sortNumber = 0.5;
 
