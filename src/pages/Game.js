@@ -73,6 +73,7 @@ class Game extends Component {
   handleTimer = () => {
     const { timer, result } = this.state;
     const SET_TIMER = 1000;
+    const END_TIMER = 30000;
     if (timer !== 0 && result === false) {
       const intervalId = setInterval(() => {
         this.setState((prevState) => ({
@@ -81,7 +82,7 @@ class Game extends Component {
       }, SET_TIMER);
       setTimeout(() => {
         clearInterval(intervalId);
-      }, 30000);
+      }, END_TIMER);
     }
   };
 
