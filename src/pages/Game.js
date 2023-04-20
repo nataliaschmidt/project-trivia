@@ -68,7 +68,7 @@ class Game extends Component {
   };
 
   handleAnswers = (item) => {
-    const { correctAnswer, currentDifficulty, isCorrect } = this.state;
+    const { correctAnswer } = this.state;
     this.setState({
       result: true,
       isCorrect: item === correctAnswer,
@@ -182,6 +182,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default connect()(Game);
