@@ -15,6 +15,8 @@ class Game extends Component {
     currentIndex: 0,
     result: false,
     isCorrect: false,
+    correctColor: '3px solid',
+    wrongColor: '3px solid',
   };
 
   componentDidMount() {
@@ -33,13 +35,24 @@ class Game extends Component {
       history.push('/');
       return;
     }
+    const answers = [...questions.results[0].incorrect_answers,
+      questions.results[0].correct_answer];
     this.setState({
       questions: questions.results,
       correctAnswer: questions.results[0].correct_answer,
-      currentAnswers: [...questions.results[0].incorrect_answers,
-        questions.results[0].correct_answer],
+      currentAnswers: answers.sort(() => Math.random() - sortNumber),
       currentQuestion: questions.results[0].question,
       currentCategory: questions.results[0].category,
+    });
+  };
+
+  handleAnswers = (item) => {
+    const { correctAnswer } = this.state;
+    this.setState({
+      result: true,
+      isCorrect: item === correctAnswer,
+      correctColor: '3px solid rgb(6, 240, 15)',
+      wrongColor: '3px solid red',
     });
   };
 
@@ -47,7 +60,9 @@ class Game extends Component {
     const { currentAnswers,
       currentQuestion,
       currentCategory,
-      isCorrect, result, correctAnswer, questions, currentIndex } = this.state;
+      isCorrect,
+      result,
+      correctAnswer, questions, currentIndex, correctColor, wrongColor } = this.state;
     console.log(questions, currentIndex);
     return (
       <div>
@@ -72,7 +87,7 @@ class Game extends Component {
           />
           <section data-testid="answer-options">
             {currentAnswers
-              .sort(() => Math.random() - sortNumber)
+              // .sort(() => Math.random() - sortNumber)
               .map((item, index) => (
                 <button
                   key={ item }
@@ -82,6 +97,9 @@ class Game extends Component {
                     item === correctAnswer ? 'correct-answer' : `wrong-answer-${index}`
                   }
                   aria-label={ item }
+                  style={ {
+                    border: item === correctAnswer ? correctColor : wrongColor } }
+                  onClick={ () => this.handleAnswers(item) }
                 />
               ))}
           </section>
