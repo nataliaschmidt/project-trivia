@@ -17,12 +17,12 @@ class Header extends Component {
 
   render() {
     const { savedImg } = this.state;
-    const { name } = this.props;
+    const { name, score } = this.props;
     return (
       <header>
         <img src={ savedImg } alt={ savedImg } data-testid="header-profile-picture" />
         <span data-testid="header-player-name">{name}</span>
-        <span data-testid="header-score">0</span>
+        <span data-testid="header-score">{score}</span>
       </header>
     );
   }
@@ -31,11 +31,13 @@ class Header extends Component {
 const mapStateToProps = (state) => ({
   name: state.player.name,
   email: state.player.gravatarEmail,
+  score: state.player.score,
 });
 
 Header.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
 export default connect(mapStateToProps)(Header);
