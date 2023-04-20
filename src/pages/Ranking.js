@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { actionResetScore } from '../redux/actions';
 
 class Ranking extends Component {
   state = {
@@ -13,8 +15,13 @@ class Ranking extends Component {
     });
   }
 
+  handleHome = () => {
+    const { history, dispatch } = this.props;
+    dispatch(actionResetScore());
+    history.push('/');
+  };
+
   render() {
-    const { history } = this.props;
     const { rankings } = this.state;
     return (
       <div>
@@ -29,7 +36,7 @@ class Ranking extends Component {
         <button
           type="button"
           data-testid="btn-go-home"
-          onClick={ () => history.push('/') }
+          onClick={ this.handleHome }
         >
           Página Inicial
 
@@ -43,6 +50,7 @@ Ranking.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Ranking;
+export default connect()(Ranking);
