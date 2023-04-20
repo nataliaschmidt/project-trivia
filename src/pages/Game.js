@@ -17,10 +17,24 @@ class Game extends Component {
     isCorrect: false,
     correctColor: '3px solid',
     wrongColor: '3px solid',
+    timer: 30,
   };
 
   componentDidMount() {
     this.getQuestions();
+    this.handleTimer();
+  }
+
+  componentDidUpdate() {
+    const { timer, result } = this.state;
+    if (timer === 0 && result === false) {
+      this.setState({
+        result: true,
+        isCorrect: false,
+        correctColor: '3px solid rgb(6, 240, 15)',
+        wrongColor: '3px solid red',
+      });
+    }
   }
 
   getQuestions = async () => {
@@ -56,17 +70,37 @@ class Game extends Component {
     });
   };
 
+  handleTimer = () => {
+    const { timer, result } = this.state;
+    const SET_TIMER = 1000;
+    const END_TIMER = 30000;
+    if (timer !== 0 && result === false) {
+      const intervalId = setInterval(() => {
+        this.setState((prevState) => ({
+          timer: prevState.timer - 1,
+        }));
+      }, SET_TIMER);
+      setTimeout(() => {
+        clearInterval(intervalId);
+      }, END_TIMER);
+    }
+  };
+
   render() {
     const { currentAnswers,
       currentQuestion,
       currentCategory,
       isCorrect,
       result,
-      correctAnswer, questions, currentIndex, correctColor, wrongColor } = this.state;
+      correctAnswer,
+      questions, currentIndex, correctColor, wrongColor, timer } = this.state;
     console.log(questions, currentIndex);
     return (
       <div>
         <Header />
+        {questions.length > 0 && (
+          <p>{timer}</p>
+        )}
         <section>
           <h3
             data-testid="question-category"
@@ -93,6 +127,7 @@ class Game extends Component {
                   key={ item }
                   type="button"
                   dangerouslySetInnerHTML={ { __html: item } }
+                  disabled={ result }
                   data-testid={
                     item === correctAnswer ? 'correct-answer' : `wrong-answer-${index}`
                   }
