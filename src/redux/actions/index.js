@@ -11,3 +11,9 @@ export const actionSetScore = (payload) => ({
   type: SET_SCORE,
   payload,
 });
+
+export const RESET_SCORE = 'RESET_SCORE';
+
+export const actionResetScore = () => ({
+  type: RESET_SCORE,
+});

@@ -1,4 +1,4 @@
-import { GET_USER, SET_SCORE } from '../actions';
+import { GET_USER, RESET_SCORE, SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   gravatarEmail: '',
@@ -20,6 +20,12 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       score: state.score + payload,
       assertions: state.assertions + 1,
+    };
+  case RESET_SCORE:
+    return {
+      ...state,
+      score: 0,
+      assertions: 0,
     };
   default:
     return state;
