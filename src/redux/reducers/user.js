@@ -1,8 +1,10 @@
-import { GET_USER } from '../actions';
+import { GET_USER, SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
-  email: '',
+  gravatarEmail: '',
   name: '',
+  score: 0,
+  assertions: 0,
 };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -10,8 +12,14 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
   case GET_USER:
     return {
       ...state,
-      email: payload.email,
+      gravatarEmail: payload.email,
       name: payload.name,
+    };
+  case SET_SCORE:
+    return {
+      ...state,
+      score: state.score + payload,
+      assertions: state.assertions + 1,
     };
   default:
     return state;

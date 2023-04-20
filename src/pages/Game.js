@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchQuestions } from '../services';
+import { actionSetScore } from '../redux/actions';
 
 const sortNumber = 0.5;
 
@@ -13,6 +15,7 @@ class Game extends Component {
     currentAnswers: [],
     currentCategory: '',
     currentIndex: 0,
+    currentDifficulty: '',
     result: false,
     isCorrect: false,
     correctColor: '3px solid',
@@ -60,6 +63,7 @@ class Game extends Component {
       currentAnswers: answers.sort(() => Math.random() - sortNumber),
       currentQuestion: questions.results[0].question,
       currentCategory: questions.results[0].category,
+      currentDifficulty: questions.results[0].difficulty,
     });
   };
 
@@ -71,8 +75,33 @@ class Game extends Component {
       correctColor: '3px solid rgb(6, 240, 15)',
       wrongColor: '3px solid red',
       isRunning: false,
-      timer: 0,
-    });
+      // timer: 0,
+    }, this.handleScore);
+  };
+
+  handleScore = () => {
+    const { currentDifficulty, isCorrect, timer } = this.state;
+    const { dispatch } = this.props;
+    if (isCorrect) {
+      let difficultyScore = 0;
+      const hardScore = 3;
+      switch (currentDifficulty) {
+      case 'hard':
+        difficultyScore = hardScore;
+        break;
+      case 'medium':
+        difficultyScore = 2;
+        break;
+      case 'easy':
+        difficultyScore = 1;
+        break;
+      default:
+        break;
+      }
+      const initialScore = 10;
+      const score = initialScore + (timer * difficultyScore);
+      dispatch(actionSetScore(score));
+    }
   };
 
   handleTimer = () => {
@@ -153,6 +182,7 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
-export default Game;
+export default connect()(Game);
