@@ -19,7 +19,7 @@ class Game extends Component {
     wrongColor: '3px solid',
     timer: 30,
     endTimer: false,
-    isRunning: false,
+    isRunning: true,
   };
 
   componentDidMount() {
@@ -70,14 +70,14 @@ class Game extends Component {
       isCorrect: item === correctAnswer,
       correctColor: '3px solid rgb(6, 240, 15)',
       wrongColor: '3px solid red',
-      isRunning: true,
+      isRunning: false,
       timer: 0,
     });
   };
 
   handleTimer = () => {
     const { timer, isRunning } = this.state;
-    if (timer === 0 || isRunning) {
+    if (timer === 0 || !isRunning) {
       clearInterval(this.timerId);
     } else {
       this.setState((prevState) => ({
