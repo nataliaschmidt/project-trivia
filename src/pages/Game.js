@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
-import { fetchQuestions } from '../services';
+import { fetchImage, fetchQuestions } from '../services';
 import { actionSetScore } from '../redux/actions';
 
 const sortNumber = 0.5;
@@ -29,6 +29,9 @@ class Game extends Component {
     const SET_INTERVAL = 1000;
     this.getQuestions();
     this.timerId = setInterval(() => this.handleTimer(), SET_INTERVAL);
+    if (!JSON.parse(localStorage.getItem('ranking'))) {
+      localStorage.setItem('ranking', JSON.stringify([]));
+    }
   }
 
   componentDidUpdate() {
@@ -117,7 +120,7 @@ class Game extends Component {
 
   handleNext = () => {
     const { currentIndex, questions } = this.state;
-    const { history } = this.props;
+    const { history, name, email, score } = this.props;
     const nextIndex = currentIndex + 1;
     const SET_INTERVAL = 1000;
     if (nextIndex < questions.length) {
@@ -143,6 +146,13 @@ class Game extends Component {
     }
     if (nextIndex === questions.length) {
       history.push('/feedback');
+      const ranking = JSON.parse(localStorage.getItem('ranking'));
+      const newRanking = [...ranking, {
+        name,
+        image: fetchImage(email),
+        score,
+      }];
+      localStorage.setItem('ranking', JSON.stringify(newRanking));
     }
   };
 
@@ -153,8 +163,7 @@ class Game extends Component {
       isCorrect,
       result,
       correctAnswer,
-      questions, currentIndex, correctColor, wrongColor, timer, endTimer } = this.state;
-    console.log(questions, currentIndex);
+      questions, correctColor, wrongColor, timer, endTimer } = this.state;
     return (
       <div>
         <Header />
@@ -224,6 +233,15 @@ Game.propTypes = {
     push: PropTypes.func.isRequired,
   }).isRequired,
   dispatch: PropTypes.func.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
+  score: PropTypes.number.isRequired,
 };
 
-export default connect()(Game);
+const mapStateToProps = (state) => ({
+  name: state.player.name,
+  email: state.player.gravatarEmail,
+  score: state.player.score,
+});
+
+export default connect(mapStateToProps)(Game);

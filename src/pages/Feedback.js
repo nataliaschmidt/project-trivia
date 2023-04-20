@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import { actionResetScore } from '../redux/actions';
 
 class Feedback extends Component {
+  handlePlayBtn = () => {
+    const { history, dispatch } = this.props;
+    dispatch(actionResetScore());
+    history.push('/');
+  };
+
   render() {
     const { assertions, score, history } = this.props;
     const number = 3;
@@ -31,7 +38,7 @@ class Feedback extends Component {
         <button
           type="button"
           data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
+          onClick={ this.handlePlayBtn }
         >
           Play Again
 
@@ -55,6 +62,7 @@ Feedback.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
