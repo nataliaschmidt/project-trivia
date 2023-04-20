@@ -117,6 +117,7 @@ class Game extends Component {
 
   handleNext = () => {
     const { currentIndex, questions } = this.state;
+    const { history } = this.props;
     const nextIndex = currentIndex + 1;
     const SET_INTERVAL = 1000;
     if (nextIndex < questions.length) {
@@ -139,6 +140,9 @@ class Game extends Component {
       }, () => {
         this.timerId = setInterval(() => this.handleTimer(), SET_INTERVAL);
       });
+    }
+    if (nextIndex === questions.length) {
+      history.push('/feedback');
     }
   };
 
