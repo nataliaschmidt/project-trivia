@@ -18,11 +18,14 @@ class Game extends Component {
     correctColor: '3px solid',
     wrongColor: '3px solid',
     timer: 30,
+    endTimer: false,
+    isRunning: false,
   };
 
   componentDidMount() {
+    const SET_INTERVAL = 1000;
     this.getQuestions();
-    this.handleTimer();
+    this.timerId = setInterval(() => this.handleTimer(), SET_INTERVAL);
   }
 
   componentDidUpdate() {
@@ -30,7 +33,7 @@ class Game extends Component {
     if (timer === 0 && result === false) {
       this.setState({
         result: true,
-        isCorrect: false,
+        endTimer: true,
         correctColor: '3px solid rgb(6, 240, 15)',
         wrongColor: '3px solid red',
       });
@@ -67,22 +70,19 @@ class Game extends Component {
       isCorrect: item === correctAnswer,
       correctColor: '3px solid rgb(6, 240, 15)',
       wrongColor: '3px solid red',
+      isRunning: true,
+      timer: 0,
     });
   };
 
   handleTimer = () => {
-    const { timer, result } = this.state;
-    const SET_TIMER = 1000;
-    const END_TIMER = 30000;
-    if (timer !== 0 && result === false) {
-      const intervalId = setInterval(() => {
-        this.setState((prevState) => ({
-          timer: prevState.timer - 1,
-        }));
-      }, SET_TIMER);
-      setTimeout(() => {
-        clearInterval(intervalId);
-      }, END_TIMER);
+    const { timer, isRunning } = this.state;
+    if (timer === 0 || isRunning) {
+      clearInterval(this.timerId);
+    } else {
+      this.setState((prevState) => ({
+        timer: prevState.timer - 1,
+      }));
     }
   };
 
@@ -93,7 +93,7 @@ class Game extends Component {
       isCorrect,
       result,
       correctAnswer,
-      questions, currentIndex, correctColor, wrongColor, timer } = this.state;
+      questions, currentIndex, correctColor, wrongColor, timer, endTimer } = this.state;
     console.log(questions, currentIndex);
     return (
       <div>
@@ -108,11 +108,16 @@ class Game extends Component {
             {currentCategory}
 
           </h3>
-          {result && (
+          {result && !endTimer && (
             isCorrect ? (
               <p>Correto</p>
             ) : (
               <p>Errado</p>
+            )
+          )}
+          {result && (
+            endTimer && (
+              <p>Acabou o tempo!</p>
             )
           )}
           <p
