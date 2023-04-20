@@ -115,6 +115,33 @@ class Game extends Component {
     }
   };
 
+  handleNext = () => {
+    const { currentIndex, questions } = this.state;
+    const nextIndex = currentIndex + 1;
+    const SET_INTERVAL = 1000;
+    if (nextIndex < questions.length) {
+      const answers = [...questions[nextIndex].incorrect_answers,
+        questions[nextIndex].correct_answer];
+      this.setState({
+        correctAnswer: questions[nextIndex].correct_answer,
+        currentAnswers: answers.sort(() => Math.random() - sortNumber),
+        currentQuestion: questions[nextIndex].question,
+        currentCategory: questions[nextIndex].category,
+        currentDifficulty: questions[nextIndex].difficulty,
+        currentIndex: nextIndex,
+        timer: 30,
+        correctColor: '3px solid',
+        wrongColor: '3px solid',
+        isRunning: true,
+        result: false,
+        isCorrect: false,
+        endTimer: false,
+      }, () => {
+        this.timerId = setInterval(() => this.handleTimer(), SET_INTERVAL);
+      });
+    }
+  };
+
   render() {
     const { currentAnswers,
       currentQuestion,
@@ -172,6 +199,16 @@ class Game extends Component {
                 />
               ))}
           </section>
+          {result && (
+            <button
+              type="button"
+              onClick={ this.handleNext }
+              data-testid="btn-next"
+            >
+              Next
+
+            </button>
+          )}
         </section>
       </div>
     );
