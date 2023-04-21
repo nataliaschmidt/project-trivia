@@ -21,7 +21,7 @@ class Game extends Component {
     correctColor: '3px solid',
     wrongColor: '3px solid',
     timer: 30,
-    endTimer: false,
+    // endTimer: false,
     isRunning: true,
   };
 
@@ -39,7 +39,7 @@ class Game extends Component {
     if (timer === 0 && result === false) {
       this.setState({
         result: true,
-        endTimer: true,
+        // endTimer: true,
         correctColor: '3px solid rgb(6, 240, 15)',
         wrongColor: '3px solid red',
       });
@@ -52,7 +52,6 @@ class Game extends Component {
     const TOTAL_QUESTIONS = 5;
     const LOGOUT_CODE = 3;
     const questions = await fetchQuestions(TOTAL_QUESTIONS, token);
-    console.log(questions);
     if (questions.response_code === LOGOUT_CODE) {
       localStorage.removeItem('token');
       history.push('/');
@@ -88,18 +87,14 @@ class Game extends Component {
     if (isCorrect) {
       let difficultyScore = 0;
       const hardScore = 3;
-      switch (currentDifficulty) {
-      case 'hard':
+      if (currentDifficulty === 'hard') {
         difficultyScore = hardScore;
-        break;
-      case 'medium':
+      }
+      if (currentDifficulty === 'medium') {
         difficultyScore = 2;
-        break;
-      case 'easy':
+      }
+      if (currentDifficulty === 'easy') {
         difficultyScore = 1;
-        break;
-      default:
-        break;
       }
       const initialScore = 10;
       const score = initialScore + (timer * difficultyScore);
@@ -139,7 +134,7 @@ class Game extends Component {
         isRunning: true,
         result: false,
         isCorrect: false,
-        endTimer: false,
+        // endTimer: false,
       }, () => {
         this.timerId = setInterval(() => this.handleTimer(), SET_INTERVAL);
       });
@@ -160,15 +155,20 @@ class Game extends Component {
     const { currentAnswers,
       currentQuestion,
       currentCategory,
-      isCorrect,
+      // isCorrect,
       result,
       correctAnswer,
-      questions, correctColor, wrongColor, timer, endTimer } = this.state;
+      questions,
+      correctColor,
+      wrongColor,
+      timer,
+      // endTimer
+    } = this.state;
     return (
       <div>
         <Header />
         {questions.length > 0 && (
-          <p>{timer}</p>
+          <p data-testid="timer">{timer}</p>
         )}
         <section>
           <h3
@@ -177,18 +177,18 @@ class Game extends Component {
             {currentCategory}
 
           </h3>
-          {result && !endTimer && (
+          {/* {result && !endTimer && (
             isCorrect ? (
               <p>Correto</p>
             ) : (
               <p>Errado</p>
             )
-          )}
-          {result && (
+          )} */}
+          {/* {result && (
             endTimer && (
               <p>Acabou o tempo!</p>
             )
-          )}
+          )} */}
           <p
             dangerouslySetInnerHTML={ { __html: currentQuestion } }
             data-testid="question-text"
@@ -243,5 +243,4 @@ const mapStateToProps = (state) => ({
   email: state.player.gravatarEmail,
   score: state.player.score,
 });
-
 export default connect(mapStateToProps)(Game);
