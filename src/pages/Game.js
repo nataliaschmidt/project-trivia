@@ -34,17 +34,17 @@ class Game extends Component {
     }
   }
 
-  componentDidUpdate() {
-    const { timer, result } = this.state;
-    if (timer === 0 && result === false) {
-      this.setState({
-        result: true,
-        // endTimer: true,
-        correctColor: '3px solid rgb(6, 240, 15)',
-        wrongColor: '3px solid red',
-      });
-    }
-  }
+  // componentDidUpdate() {
+  //   const { timer, result } = this.state;
+  //   if (timer === 0 && result === false) {
+  //     this.setState({
+  //       // result: true,
+  //       // endTimer: true,
+  //       correctColor: '3px solid rgb(6, 240, 15)',
+  //       wrongColor: '3px solid red',
+  //     });
+  //   }
+  // }
 
   getQuestions = async () => {
     const { history } = this.props;
