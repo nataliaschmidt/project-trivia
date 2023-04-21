@@ -26,13 +26,14 @@ class Ranking extends Component {
     return (
       <div>
         <h1 data-testid="ranking-title">Xablau</h1>
-        {rankings.sort((a, b) => b.score - a.score).map((item, index) => (
-          <div key={ index }>
-            <img src={ item.image } alt={ item.image } />
-            <p data-testid={ `player-name-${index}` }>{item.name}</p>
-            <p data-testid={ `player-score-${index}` }>{item.score}</p>
-          </div>
-        ))}
+        {rankings && rankings
+          .sort((a, b) => b.score - a.score).map((item, index) => (
+            <div key={ index }>
+              <img src={ item.image } alt={ item.image } />
+              <p data-testid={ `player-name-${index}` }>{item.name}</p>
+              <p data-testid={ `player-score-${index}` }>{item.score}</p>
+            </div>
+          ))}
         <button
           type="button"
           data-testid="btn-go-home"
