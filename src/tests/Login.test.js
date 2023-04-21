@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../../App'
-import Login from '../../pages/Login';
-import { renderWithRouterAndRedux } from './renderWithRouterAndRedux';
+import App from '../App'
+import Login from '../pages/Login';
+import { renderWithRouterAndRedux } from './helpers/renderWithRouterAndRedux';
 
 describe('Cobertura de testes da tela de Login', () => {
   const cosntEmail = 'input-gravatar-email';
