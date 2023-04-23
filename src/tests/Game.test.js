@@ -1,6 +1,7 @@
 import Game from "../pages/Game"
 import { renderWithRouterAndRedux } from "./helpers/renderWithRouterAndRedux";
 import mockFetchQuestions from "./helpers/mockFetchQuestions";
+import { act } from 'react-dom/test-utils';
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
@@ -90,29 +91,29 @@ describe('Testa a página "Game"', () => {
     });
   });
 
-  test('Verifica se quando o timer chegar em 0, desabilita os botões de resposta', async () => {
-    const initialEntries = ['/game']
-    renderWithRouterAndRedux(<App />, { initialEntries });
-    await waitFor(() => {
-      expect(screen.getByTestId('correct-answer')).toBeEnabled();
-      expect(screen.getByText('True')).toBeEnabled();
-      expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid');
-      expect(screen.getByText('True').style.border).toBe('3px solid')
-    })
-    const timer = await screen.findByTestId('timer');
-    setTimeout(() => {
-      expect(timer.innerHTML).toBe('0')
-      expect(screen.getByText(/acabou o tempo!/i)).toBeInTheDocument();
-      expect(screen.getByTestId('correct-answer')).toBeDisabled();
-      expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid rgb(6, 240, 15)');
-      expect(screen.getByText('True').style.border).toBe('3px solid red')
-      expect(screen.getByText('True')).toBeDisabled();
-      expect(clearInterval).toHaveBeenCalledWith(this.timerId);
-    }, 31000)
-    setTimeout(() => {
-      expect(timer.innerHTML).not.toBe('-1');
-    }, 1000)
+test('Verifica se quando o timer chegar em 0, desabilita os botões de resposta', async () => {
+  jest.useFakeTimers();
+  const initialEntries = ['/game'];
+  renderWithRouterAndRedux(<App />, { initialEntries });
+  await waitFor(() => {
+    expect(screen.getByTestId('correct-answer')).toBeEnabled();
+    expect(screen.getByText('True')).toBeEnabled();
+    expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid');
+    expect(screen.getByText('True').style.border).toBe('3px solid');
   });
+  const timer = await screen.findByTestId('timer');
+  await act(async () => {
+    jest.advanceTimersByTime(30000);
+  });
+  expect(timer.innerHTML).toBe('0');
+  expect(screen.getByTestId('correct-answer')).toBeDisabled();
+  expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid rgb(6, 240, 15)');
+  expect(screen.getByText('True').style.border).toBe('3px solid red');
+  expect(screen.getByText('True')).toBeDisabled();
+  jest.useRealTimers();
+});
+
+  
 
   test('Verifica se o token for inválido se retorna para a página de Login', async () => {
     jest.clearAllMocks()
