@@ -11,7 +11,8 @@ describe('Testa a página "Game"', () => {
   });
 
   test('Verifica se todos os elementos da página são renderizados', async () => {
-    renderWithRouterAndRedux(<Game />);
+    const initialEntries = ['/game']
+    renderWithRouterAndRedux(<App />, {initialEntries});
     const timer = await screen.findByTestId('timer');
     const questionCategory = await screen.findByTestId('question-category');
     const questionText = await screen.findByTestId('question-text');
@@ -43,6 +44,7 @@ describe('Testa a página "Game"', () => {
     const { history } = renderWithRouterAndRedux(<App />, { initialEntries });
     const questionText = await screen.findByTestId('question-text');
     const answerFalse = await screen.findByText('False');
+    const timer = await screen.findByTestId('timer');
     expect(questionText.innerHTML).toBe('The Republic of Malta is the smallest microstate worldwide.')
     userEvent.click(answerFalse);
     await waitFor(() => {
@@ -51,6 +53,7 @@ describe('Testa a página "Game"', () => {
       });
       userEvent.click(btnNext);
       expect(questionText.innerHTML).toBe('In quantum physics, which of these theorised sub-atomic particles has yet to be observed?')
+      expect(timer.innerHTML).toBe('30');
       const correctAnswer = screen.getByTestId('correct-answer');
       userEvent.click(correctAnswer);
 
@@ -88,7 +91,14 @@ describe('Testa a página "Game"', () => {
   });
 
   test('Verifica se quando o timer chegar em 0, desabilita os botões de resposta', async () => {
-    renderWithRouterAndRedux(<Game />);
+    const initialEntries = ['/game']
+    renderWithRouterAndRedux(<App />, { initialEntries });
+    await waitFor(() => {
+      expect(screen.getByTestId('correct-answer')).toBeEnabled();
+      expect(screen.getByText('True')).toBeEnabled();
+      expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid');
+      expect(screen.getByText('True').style.border).toBe('3px solid')
+    })
     const timer = await screen.findByTestId('timer');
     setTimeout(() => {
       expect(timer.innerHTML).toBe('0')
@@ -97,6 +107,7 @@ describe('Testa a página "Game"', () => {
       expect(screen.getByTestId('correct-answer').style.border).toBe('3px solid rgb(6, 240, 15)');
       expect(screen.getByText('True').style.border).toBe('3px solid red')
       expect(screen.getByText('True')).toBeDisabled();
+      expect(clearInterval).toHaveBeenCalledWith(this.timerId);
     }, 31000)
     setTimeout(() => {
       expect(timer.innerHTML).not.toBe('-1');
