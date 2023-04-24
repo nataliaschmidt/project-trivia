@@ -13,13 +13,34 @@ export const fetchImage = (email) => {
   return emailUrl;
 };
 
-const defaultNumber = 5;
+// const defaultNumber = 5;
+
+// export const fetchQuestions = async (
+//   token,
+//   { number = defaultNumber, category = 0, difficulty = 0, type = 0 } = {},
+// ) => {
+//   const url = `https://opentdb.com/api.php?amount=${number}&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`;
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   return data;
+// };
 
 export const fetchQuestions = async (
   token,
-  { number = defaultNumber, category = 0, difficulty = 0, type = 0 } = {},
+  { number, category, difficulty, type },
 ) => {
-  const url = `https://opentdb.com/api.php?amount=${number}&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`;
+  let url = `https://opentdb.com/api.php?amount=${number}`;
+  if (category !== '0') {
+    url += `&category=${category}`;
+  }
+  if (difficulty !== '0') {
+    url += `&difficulty=${difficulty}`;
+  }
+  if (type !== '0') {
+    url += `&type=${type}`;
+  }
+  url += `&token=${token}`;
+  console.log(url);
   const response = await fetch(url);
   const data = await response.json();
   return data;
