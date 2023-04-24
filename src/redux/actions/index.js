@@ -17,3 +17,10 @@ export const RESET_SCORE = 'RESET_SCORE';
 export const actionResetScore = () => ({
   type: RESET_SCORE,
 });
+
+export const SETTINGS = 'SETTINGS';
+
+export const actionSettings = (payload) => ({
+  type: SETTINGS,
+  payload,
+});
