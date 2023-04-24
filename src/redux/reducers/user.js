@@ -1,10 +1,11 @@
-import { GET_USER, RESET_SCORE, SET_SCORE } from '../actions';
+import { GET_USER, RESET_SCORE, SETTINGS, SET_SCORE } from '../actions';
 
 const INITIAL_STATE = {
   gravatarEmail: '',
   name: '',
   score: 0,
   assertions: 0,
+  settings: {},
 };
 
 const userReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -26,6 +27,11 @@ const userReducer = (state = INITIAL_STATE, { type, payload }) => {
       ...state,
       score: 0,
       assertions: 0,
+    };
+  case SETTINGS:
+    return {
+      ...state,
+      settings: payload,
     };
   default:
     return state;

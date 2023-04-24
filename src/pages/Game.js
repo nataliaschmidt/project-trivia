@@ -47,11 +47,11 @@ class Game extends Component {
   }
 
   getQuestions = async () => {
-    const { history } = this.props;
+    const { history, settings } = this.props;
     const token = localStorage.getItem('token');
-    const TOTAL_QUESTIONS = 5;
     const LOGOUT_CODE = 3;
-    const questions = await fetchQuestions(TOTAL_QUESTIONS, token);
+    const questions = await fetchQuestions(token, settings);
+    console.log(questions);
     if (questions.response_code === LOGOUT_CODE) {
       localStorage.removeItem('token');
       history.push('/');
@@ -177,18 +177,6 @@ class Game extends Component {
             {currentCategory}
 
           </h3>
-          {/* {result && !endTimer && (
-            isCorrect ? (
-              <p>Correto</p>
-            ) : (
-              <p>Errado</p>
-            )
-          )} */}
-          {/* {result && (
-            endTimer && (
-              <p>Acabou o tempo!</p>
-            )
-          )} */}
           <p
             dangerouslySetInnerHTML={ { __html: currentQuestion } }
             data-testid="question-text"
@@ -236,11 +224,18 @@ Game.propTypes = {
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
+  settings: PropTypes.shape({
+    number: PropTypes.string,
+    category: PropTypes.string,
+    difficulty: PropTypes.string,
+    type: PropTypes.string,
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({
   name: state.player.name,
   email: state.player.gravatarEmail,
   score: state.player.score,
+  settings: state.player.settings,
 });
 export default connect(mapStateToProps)(Game);
