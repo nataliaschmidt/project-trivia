@@ -1,0 +1,22 @@
+:root {
+
+  --bg-color: #252422;
+
+  --font-color: #f1f1f1;
+
+  --bg-gradient-color1: #6e44ff;
+
+  --bg-gradient-color2: #a541fc;
+
+  --bg-gradient-color3: #e440f2;
+
+  --bg-gradient-color4: #ff1b8d;
+
+  --bg-gradient-color5: #ff0a54;
+
+  --box-shadow-timer1: #101010;
+
+  --box-shadow-timer2: #323232;
+
+  --bg-neumorphism: #1c1c1c;
+}

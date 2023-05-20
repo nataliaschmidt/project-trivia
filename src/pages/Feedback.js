@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { actionResetScore } from '../redux/actions';
+import './Feedback.css';
 
 class Feedback extends Component {
   handlePlayBtn = () => {
@@ -15,43 +16,49 @@ class Feedback extends Component {
     const { assertions, score, history } = this.props;
     const number = 3;
     return (
-      <div>
+      <>
         <Header />
-        <p
-          data-testid="feedback-text"
-        >
-          {assertions < number ? 'Could be better...' : 'Well Done!'}
+        <div className="container-feedback">
+          <h1
+            className={ assertions < number ? 'text-result-bad' : 'text-result-good' }
+          >
+            {assertions < number ? 'Could be better...' : 'Well Done!'}
 
-        </p>
-        <p>
-          Placar final:
-          <span data-testid="feedback-total-score">
-            {score}
-          </span>
-        </p>
-        <p>
-          Respostas corretas:
-          <span data-testid="feedback-total-question">
-            {assertions}
-          </span>
-        </p>
-        <button
-          type="button"
-          data-testid="btn-play-again"
-          onClick={ this.handlePlayBtn }
-        >
-          Play Again
+          </h1>
 
-        </button>
-        <button
-          type="button"
-          data-testid="btn-ranking"
-          onClick={ () => history.push('/ranking') }
-        >
-          Ranking
+          <div className="bg-border">
+            <div className="container-score-info">
+              <p>
+                {`Final score: ${score}`}
+              </p>
+              <p>
+                {`Correct Answers: ${assertions}`}
+              </p>
+            </div>
+          </div>
 
-        </button>
-      </div>
+          <div className="container-buttons">
+            <button
+              className="button is-link is-outlined"
+              type="button"
+              data-testid="btn-play-again"
+              onClick={ this.handlePlayBtn }
+            >
+              Play Again
+
+            </button>
+            <button
+              className="button is-link is-outlined"
+              type="button"
+              data-testid="btn-ranking"
+              onClick={ () => history.push('/ranking') }
+            >
+              Ranking
+
+            </button>
+          </div>
+        </div>
+      </>
     );
   }
 }

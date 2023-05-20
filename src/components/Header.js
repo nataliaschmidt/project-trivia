@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchImage } from '../services';
+import LogoTrivia from '../assets/images/trivia-logo.png';
+import './Header.css';
 
 class Header extends Component {
   state = {
@@ -20,9 +22,16 @@ class Header extends Component {
     const { name, score } = this.props;
     return (
       <header>
-        <img src={ savedImg } alt={ savedImg } data-testid="header-profile-picture" />
-        <span data-testid="header-player-name">{name}</span>
-        <span data-testid="header-score">{score}</span>
+        <div className="user-info">
+          <img src={ savedImg } alt={ savedImg } className="gravatar-img" />
+          <span className="name-header">{name}</span>
+        </div>
+        <img
+          src={ LogoTrivia }
+          alt="Logo da trivia"
+          className="logo-trivia-header"
+        />
+        <span className="score">{`Score: ${score}`}</span>
       </header>
     );
   }

@@ -1,0 +1,71 @@
+.container-ranking {
+  align-items: center;
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container-card-ranking {
+  align-items: center;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding-bottom: 30px;
+  width: 100%;
+}
+
+.ranking-title {
+  font-size: 4.5em;
+  margin-bottom: 35px;
+  margin-top: 40px;
+}
+
+.card-ranking {
+  align-items: center;
+  background: var(--bg-neumorphism);
+  border-radius: 9px;
+  box-shadow: -13px 13px 27px var(--box-shadow-timer1) ,
+    13px -13px 27px var(--box-shadow-timer2);
+  display: flex;
+  height: 120px;
+  justify-content: space-around;
+  width: 80%;
+}
+
+.container-score-infos {
+  width: 60%;
+}
+
+.btn-play-again {
+  margin-bottom: 30px;
+}
+
+@media screen and ( max-width : 1250px ) {
+
+  .container-card-ranking {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media screen and ( max-width : 1000px ) {
+
+  .ranking-title {
+    font-size: 3.5em;
+  }
+
+  .img-ranking {
+    border-radius: 50%;
+    height: 70px;
+    width: 70px;
+  }
+
+  .container-card-ranking {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

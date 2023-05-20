@@ -1,0 +1,53 @@
+header {
+  align-items: center;
+  background-image: linear-gradient(to right, var(--bg-gradient-color1), var(--bg-gradient-color2), var(--bg-gradient-color3), var(--bg-gradient-color4), var(--bg-gradient-color5));
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 3px;
+  display: flex;
+  height: 20%;
+  justify-content: space-evenly;
+  padding: 10px;
+}
+
+.user-info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.score {
+  font-size: 1.5em;
+}
+
+.gravatar-img {
+  border-radius: 50%;
+  margin-top: 10px;
+  object-fit: contain;
+}
+
+.name-header {
+  font-size: 1.1em;
+}
+
+.logo-trivia-header {
+  width: 35%;
+}
+
+@media screen and ( max-width : 1000px ) {
+
+  .gravatar-img {
+    width: 40%;
+  }
+
+  .logo-trivia-header {
+    width: 35%;
+  }
+
+  .score {
+    font-size: 1em;
+  }
+
+}

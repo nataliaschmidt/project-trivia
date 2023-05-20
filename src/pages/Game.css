@@ -1,0 +1,175 @@
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 80%;
+  justify-content: center;
+}
+
+.container-timer {
+  align-items: center;
+  background: var(--bg-neumorphism);
+  border-radius: 122px;
+  box-shadow: -9px 9px 27px var(--box-shadow-timer1) ,
+    9px -9px 27px var(--box-shadow-timer2);
+  color: var(--font-color);
+  display: flex;
+  font-size: 3em;
+  height: 100px;
+  justify-content: center;
+  width: 100px;
+}
+
+.start-time {
+  animation: pulse 1s 25;
+}
+
+@keyframes pulse {
+
+  0% {
+    backdrop-filter: blur(0);
+    box-shadow:  -9px 9px 27px var(--bg-gradient-color1) ,
+      9px -9px 27px var(--bg-gradient-color1);
+  }
+
+  20% {
+    backdrop-filter: blur(5px);
+    box-shadow:  -9px 9px 30px var(--bg-gradient-color1) ,
+      9px -9px 30px var(--bg-gradient-color2);
+  }
+
+  40% {
+    backdrop-filter: blur(10px);
+    box-shadow:  -9px 9px 33pxvar(--bg-gradient-color2) ,
+      9px -9px 33px var(--bg-gradient-color3);
+  }
+
+  60% {
+    backdrop-filter: blur(15px);
+    box-shadow:  -9px 9px 36px var(--bg-gradient-color3) ,
+      9px -9px 36px var(--bg-gradient-color4);
+  }
+
+  80% {
+    backdrop-filter: blur(10px);
+    box-shadow:  -9px 9px 33px var(--bg-gradient-color4) ,
+      9px -9px 33px var(--bg-gradient-color5);
+  }
+
+  100% {
+    backdrop-filter: blur(5px);
+    box-shadow:  -9px 9px 30px var(--bg-gradient-color5) ,
+      9px -9px 30px #ff4b4b;
+  }
+}
+
+.final-timer {
+  animation: pulse-red 1s 5;
+}
+
+@keyframes pulse-red {
+
+  0% {
+    backdrop-filter: blur();
+    box-shadow:  -9px 9px 27px #ff4b4b ,
+      9px -9px 27px #f72727;
+  }
+
+  20% {
+    backdrop-filter: blur(5px);
+    box-shadow:  -9px 9px 30px #f72727 ,
+      9px -9px 30px #f71313;
+  }
+
+  40% {
+    backdrop-filter: blur(10px);
+    box-shadow:  -9px 9px 33px #f71313 ,
+      9px -9px 33px #e70202;
+  }
+
+  60% {
+    backdrop-filter: blur(15px);
+    box-shadow:  -9px 9px 36px #e70202 ,
+      9px -9px 36px #c10404;
+  }
+
+  80% {
+    backdrop-filter: blur(10px);
+    box-shadow:  -9px 9px 33px #c10404 ,
+      9px -9px 33px #930303;
+  }
+
+  100% {
+    backdrop-filter: blur(5px);
+    box-shadow:  -9px 9px 30px #930303 ,
+      9px -9px 30px #930303;
+  }
+}
+
+.card-game {
+  align-items: center;
+  background: var(--bg-neumorphism);
+  border-radius: 9px;
+  box-shadow: -9px 9px 27px var(--box-shadow-timer1) ,
+    9px -9px 27px var(--box-shadow-timer2);
+  color: var(--font-color);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: max-content;
+  min-height: 420px;
+  padding: 10px;
+  width: 650px;
+}
+
+.card-game > h3 {
+  font-size: 1.5em;
+  margin-top: 15px;
+}
+
+.card-game > p {
+  font-size: 1.2em;
+  text-align: center;
+}
+
+.container-answer-button {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.btn-answer {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+@media screen and ( max-width : 700px ) {
+
+  .container-timer {
+    font-size: 1.8em;
+    height: 80px;
+    width: 80px;
+  }
+
+  .card-game {
+    max-height: max-content;
+    min-height: 70%;
+    width: 80%;
+  }
+
+  .card-game > h3 {
+    font-size: 1.2em;
+    text-align: center;
+  }
+
+  .card-game > p {
+    font-size: 1em;
+  }
+
+  .btn-answer {
+    padding: 10px;
+  }
+}

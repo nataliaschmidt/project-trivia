@@ -1,0 +1,115 @@
+.container-login {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.bg-video {
+  background-size: cover;
+  min-height: 100%;
+  min-width: 100%;
+  position: fixed;
+  z-index: -1;
+}
+
+.logo-trivia {
+  background-color: transparent;
+  margin-bottom: 15px;
+}
+
+
+.form-login {
+  align-items: center;
+  background-color: #83a9f4e7;
+  border: 1.5px solid white;
+  border-radius: 9px;
+  box-shadow: inset 16px 16px 45px #485d86,
+    inset -16px -16px 45px #bef5ff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 500px;
+  justify-content: center;
+  padding: 3%;
+  width: 550px;
+}
+
+.display-settings {
+  align-items: center;
+  background-color: #83a9f4;
+  border: 1.5px solid white;
+  border-radius: 9px;
+  box-shadow: inset 16px 16px 45px #485d86,
+    inset -16px -16px 45px #bef5ff;
+  display: flex;
+  flex-direction: column;
+  font-weight: 600;
+  gap: 20px;
+  height: 550px;
+  justify-content: center;
+  margin-top: 2%;
+  padding: 3%;
+  position: fixed;
+  width: 550px;
+  z-index: 5;
+}
+
+.display-settings > h3 {
+  font-size: 2em;
+  margin-top: 8px;
+}
+
+.container-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 60%;
+
+}
+
+.container-inputs > label {
+  align-content: stretch;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.1em;
+}
+
+.select-settings {
+  width: 100%;
+}
+
+.icon-settings {
+  margin-right: 10px;
+}
+
+@media screen and ( min-width : 1001px ) {
+
+  .bg-video {
+    object-fit: cover;
+  }
+
+}
+
+@media screen and ( max-width : 1000px ) {
+
+  .bg-video {
+    object-fit: cover;
+  }
+
+  .logo-trivia {
+    width: 70%;
+  }
+
+  .form-login {
+    height: 60%;
+    width: 75%;
+  }
+
+  .display-settings {
+    height: 62%;
+    width: 75%;
+  }
+
+}

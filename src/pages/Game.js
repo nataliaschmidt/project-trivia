@@ -1,9 +1,11 @@
+/* eslint-disable max-lines */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { fetchImage, fetchQuestions } from '../services';
 import { actionSetScore } from '../redux/actions';
+import './Game.css';
 
 const sortNumber = 0.5;
 
@@ -113,6 +115,22 @@ class Game extends Component {
     }
   };
 
+  handlePulseTimer = () => {
+    const FIVE = 5;
+
+    const { isRunning, timer } = this.state;
+    if (!isRunning || timer === 0) {
+      return 'container-timer';
+    }
+
+    if (timer > FIVE) {
+      return 'container-timer start-time';
+    }
+    if (timer <= FIVE && timer > 0) {
+      return 'container-timer final-timer';
+    }
+  };
+
   handleNext = () => {
     const { currentIndex, questions } = this.state;
     const { history, name, email, score } = this.props;
@@ -165,53 +183,66 @@ class Game extends Component {
       // endTimer
     } = this.state;
     return (
-      <div>
+      <>
         <Header />
-        {questions.length > 0 && (
-          <p data-testid="timer">{timer}</p>
-        )}
-        <section>
-          <h3
-            data-testid="question-category"
-          >
-            {currentCategory}
+        <main>
+          {questions.length > 0 && (
+            <>
+              <div
+                className={ this.handlePulseTimer() }
+              >
+                <p data-testid="timer">{timer}</p>
+              </div>
 
-          </h3>
-          <p
-            dangerouslySetInnerHTML={ { __html: currentQuestion } }
-            data-testid="question-text"
-          />
-          <section data-testid="answer-options">
-            {currentAnswers
-              // .sort(() => Math.random() - sortNumber)
-              .map((item, index) => (
-                <button
-                  key={ item }
-                  type="button"
-                  dangerouslySetInnerHTML={ { __html: item } }
-                  disabled={ result }
-                  data-testid={
-                    item === correctAnswer ? 'correct-answer' : `wrong-answer-${index}`
-                  }
-                  aria-label={ item }
-                  style={ {
-                    border: item === correctAnswer ? correctColor : wrongColor } }
-                  onClick={ () => this.handleAnswers(item) }
+              <div className="card-game">
+                <h3
+                  data-testid="question-category"
+                >
+                  {`Category: ${currentCategory}`}
+
+                </h3>
+                <p
+                  dangerouslySetInnerHTML={ { __html: currentQuestion } }
+                  data-testid="question-text"
                 />
-              ))}
-          </section>
-          {result && (
-            <button
-              type="button"
-              onClick={ this.handleNext }
-              data-testid="btn-next"
-            >
-              Next
+                <div className="container-answer-button">
+                  {currentAnswers
+                    // .sort(() => Math.random() - sortNumber)
+                    .map((item, index) => (
+                      <button
+                        className="button is-link is-outlined btn-answer"
+                        key={ item }
+                        type="button"
+                        dangerouslySetInnerHTML={ { __html: item } }
+                        disabled={ result }
+                        data-testid={
+                          item === correctAnswer
+                            ? 'correct-answer' : `wrong-answer-${index}`
+                        }
+                        aria-label={ item }
+                        style={ {
+                          border: item === correctAnswer ? correctColor : wrongColor,
+                        } }
+                        onClick={ () => this.handleAnswers(item) }
+                      />
+                    ))}
+                </div>
+                {result && (
+                  <button
+                    className="button is-link is-inverted is-outlined is-rounded"
+                    type="button"
+                    onClick={ this.handleNext }
+                    data-testid="btn-next"
+                  >
+                    Next
 
-            </button>
+                  </button>
+                )}
+              </div>
+            </>
           )}
-        </section>
-      </div>
+        </main>
+      </>
     );
   }
 }

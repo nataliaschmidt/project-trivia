@@ -1,0 +1,15 @@
+@import './reset.css' ;
+
+@import 'variables.css' ;
+
+#root {
+  background-color: var(--bg-color);
+  color: var(--font-color);
+  height: 100%;
+}
+
+body {
+  background-color: var(--bg-color);
+  height: 100%;
+}
+
