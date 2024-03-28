@@ -21,7 +21,8 @@ pipeline {
         }
         stage('Iniciar') { 
             steps {
-                    sh 'ssh ubuntu@172.17.0.1 "cd /home/ubuntu/apps/Trivia;export JENKINS_NODE_COOKIE=dontKillMe;pm2 stop Trivia -s;pm2 delete NKS -s"'
+                    sh 'ssh ubuntu@172.17.0.1 cd /home/ubuntu/apps/Trivia;export JENKINS_NODE_COOKIE=dontKillMe;pm2 stop Trivia -s'
+                    sh 'ssh ubuntu@172.17.0.1 cd /home/ubuntu/apps/Trivia;export JENKINS_NODE_COOKIE=dontKillMe;pm2 delete Trivia -s'
                     sh 'ssh ubuntu@172.17.0.1 "cd /home/ubuntu/apps/Trivia;pm2 start -n Trivia npm -- start;pm2 save --force"' 
             }
         }
